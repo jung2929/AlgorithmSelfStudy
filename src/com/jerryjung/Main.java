@@ -13,6 +13,10 @@ public class Main {
      *
      * 예제 출력 :
      *
+     * 예제 입력 2 :
+     *
+     * 예제 입력 2 :
+     *
      */
     public static void main(String[] args) {
         System.out.println("정제리 알고리즘 셀프 스터디");
