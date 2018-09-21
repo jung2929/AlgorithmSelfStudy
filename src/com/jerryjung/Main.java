@@ -5,33 +5,40 @@ import java.util.Scanner;
 public class Main {
 
     /**
-     * 문제 : a부터 c까지 증가한 뒤, c-1부터 b까지 감소하는 과정을 출력해보자.
+     * 문제 : 3 개의 정수가 주어질 때, 이 중 중간값을 찾는 프로그램을 작성하여라.
      *
-     * 입력 : 첫째 줄에 자연수 a,c,b가 공백을 가지고 주어진다. a는 c보다 작거나 같으며, c는 b보다 크게 입력된다. ( 1 <= a,b,c <= 1,000)
+     * 입력 : 첫째 줄에 3개의 정수a,b,c 가 주어진다. (0≤a,b,c≤10,000)
      *
-     * 출력 : 첫째 줄에 a부터 c까지의 자연수를 공백을 사이에 두고 차례대로 출력한 뒤, c-1부터 b까지의 자연수를 공백을 사이에 두고 차례대로 출력한다.
+     * 출력 : 첫째 줄에 a,b,c 중 중간값을 출력한다.
      *
-     * 예제 입력 : 2 5 3
+     * 예제 입력 : 10 2 5
      *
-     * 예제 출력 : 2 3 4 5 4 3
+     * 예제 출력 : 5
      *
-     * 예제 입력 2 : 1 7 2
+     * 예제 입력 2 : 3 7 7
      *
-     * 예제 출력 2 : 1 2 3 4 5 6 7 6 5 4 3 2
+     * 예제 출력 2 : 7
      *
      */
     public static void main(String[] args) {
         final Scanner scanner = new Scanner(System.in);
-        final int a = scanner.nextInt();
-        final int c = scanner.nextInt();
-        final int b = scanner.nextInt();
+        final int parameter1 = scanner.nextInt();
+        final int parameter2 = scanner.nextInt();
+        final int parameter3 = scanner.nextInt();
 
-        for (int i = a; i <= c; i++) {
-            System.out.print(i + " ");
+        int median = 0;
+
+        if (parameter1 > parameter2) {
+            if (parameter2 > parameter3) median = parameter2;
+            else if (parameter1 > parameter3) median = parameter3;
+            else median = parameter1;
+        } else {
+            // parameter2 > parameter1
+            if (parameter1 > parameter3) median = parameter1;
+            else if (parameter2 > parameter3) median = parameter3;
+            else median = parameter2;
         }
 
-        for (int j = c - 1; j >= b; j--) {
-            System.out.print(j + " ");
-        }
+        System.out.print(median);
     }
 }
