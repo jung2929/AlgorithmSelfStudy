@@ -1,4 +1,4 @@
-//package com.jerryjung;
+package com.jerryjung;
 
 import java.util.Scanner;
 
