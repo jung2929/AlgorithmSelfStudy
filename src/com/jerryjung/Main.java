@@ -1,4 +1,6 @@
-package com.jerryjung;
+//package com.jerryjung;
+
+import java.util.Scanner;
 
 public class Main {
 
@@ -29,6 +31,130 @@ public class Main {
      *
      */
     public static void main(String[] args) {
-        System.out.println("정제리 알고리즘 셀프 스터디");
+        final Scanner scanner = new Scanner(System.in);
+        int[][] offset = new int[5][5];
+        String[][] result = new String[5][5];
+
+        for (int i = 0; i < 5; i++) {
+            for (int j = 0; j < 5; j++) {
+                offset[i][j] = scanner.nextInt();
+            }
+        }
+
+        for (int i = 0; i < 5; i++) {
+            for (int j = 0; j < 5; j++) {
+                int value = offset[i][j],top = 0, left = 0, right = 0, bottom = 0;
+                switch (i) {
+                    case 0:
+                        switch (j) {
+                            case 0:
+                                right = offset[i][j + 1];
+                                bottom = offset[i + 1][j];
+                                if (value < right && value < bottom) {
+                                    result[i][j] = "*";
+                                } else {
+                                    result[i][j] = String.valueOf(value);
+                                }
+                                break;
+                            case 4:
+                                left = offset[i][j - 1];
+                                bottom = offset[i + 1][j];
+                                if (value < left && value < bottom) {
+                                    result[i][j] = "*";
+                                } else {
+                                    result[i][j] = String.valueOf(value);
+                                }
+                                break;
+                            default:
+                                //top = offset[i - 1][j];
+                                left = offset[i][j - 1];
+                                right = offset[i][j + 1];
+                                bottom = offset[i + 1][j];
+                                if (value < left && value < right && value < bottom) {
+                                    result[i][j] = "*";
+                                } else {
+                                    result[i][j] = String.valueOf(value);
+                                }
+                                break;
+                        }
+                        break;
+                    case 4:
+                        switch (j) {
+                            case 0:
+                                top = offset[i - 1][j];
+                                right = offset[i][j + 1];
+                                if (value < top && value < right) {
+                                    result[i][j] = "*";
+                                } else {
+                                    result[i][j] = String.valueOf(value);
+                                }
+                                break;
+                            case 4:
+                                top = offset[i - 1][j];
+                                left = offset[i][j - 1];
+                                if (value < top && value < left) {
+                                    result[i][j] = "*";
+                                } else {
+                                    result[i][j] = String.valueOf(value);
+                                }
+                                break;
+                            default:
+                                top = offset[i - 1][j];
+                                left = offset[i][j - 1];
+                                right = offset[i][j + 1];
+                                //bottom = offset[i + 1][j];
+                                if (value < top && value < left && value < right) {
+                                    result[i][j] = "*";
+                                } else {
+                                    result[i][j] = String.valueOf(value);
+                                }
+                                break;
+                        }
+                        break;
+                    default:
+                        switch (j) {
+                            case 0:
+                                top = offset[i - 1][j];
+                                right = offset[i][j + 1];
+                                bottom = offset[i + 1][j];
+                                if (value < top && value < right && value < bottom) {
+                                    result[i][j] = "*";
+                                } else {
+                                    result[i][j] = String.valueOf(value);
+                                }
+                                break;
+                            case 4:
+                                top = offset[i - 1][j];
+                                left = offset[i][j - 1];
+                                bottom = offset[i + 1][j];
+                                if (value < top && value < left && value < bottom) {
+                                    result[i][j] = "*";
+                                } else {
+                                    result[i][j] = String.valueOf(value);
+                                }
+                                break;
+                            default:
+                                top = offset[i - 1][j];
+                                left = offset[i][j - 1];
+                                right = offset[i][j + 1];
+                                bottom = offset[i + 1][j];
+                                if (value < top && value < left && value < right && value < bottom) {
+                                    result[i][j] = "*";
+                                } else {
+                                    result[i][j] = String.valueOf(value);
+                                }
+                                break;
+                        }
+                        break;
+                }
+            }
+        }
+
+        for (String[] row : result) {
+            for (String col : row) {
+                System.out.print(col + " ");
+            }
+            System.out.print("\n");
+        }
     }
 }
