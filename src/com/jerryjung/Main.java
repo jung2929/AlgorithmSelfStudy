@@ -56,16 +56,15 @@ public class Main {
         final int R = scanner.nextInt();
         final int[][] tetris = new int[R][C];
 
-        for (int i = 0; i < R; i++) {
-            // 각 행마다 배치 가능한 인덱스 담은 ArrayList 배열
-            for (int j = 0; j < C; j++) {
-                tetris[i][j] = scanner.nextInt();
-            }
-        }
-
         if (R < 4) {
             System.out.print("0 0");
             return;
+        }
+
+        for (int i = 0; i < R; i++) {
+            for (int j = 0; j < C; j++) {
+                tetris[i][j] = scanner.nextInt();
+            }
         }
 
         int[] rowValueInEachColumn = new int[C];
@@ -104,26 +103,29 @@ public class Main {
         ////////////////////////////////////
         // 타겟 열, 타겟 로우 필요
         int maxRow = 0;
-        for (int i = targetRowValue; i > 0; i--) {
-            if (!isMaxRow(tetris, i, targetColumnIndex, C)) {
-                maxRow = i;
-                break;
+        for (int i = targetRowValue; i > targetRowValue - 4; i--) {
+            if (isAllOne(tetris, i, targetColumnIndex, C)) {
+                maxRow++;
             }
         }
 
-        System.out.print((targetColumnIndex + 1) + " " + (R - maxRow));
+        if (maxRow == 0) {
+            System.out.print("0 0");
+        } else {
+            System.out.print((targetColumnIndex + 1) + " " + maxRow);
+        }
     }
 
-    private static boolean isMaxRow(final int[][] tetris, int targetRow, int targetColumn, int maxColumn) {
-        boolean isMaxRow = true;
+    private static boolean isAllOne(final int[][] tetris, int targetRow, int targetColumn, int maxColumn) {
+        boolean isAllOne = true;
         for (int i = 0; i < maxColumn; i++) {
             if (i != targetColumn) {
                 if (tetris[targetRow - 1][i] == 0) {
-                    isMaxRow = false;
+                    isAllOne = false;
                     break;
                 }
             }
         }
-        return isMaxRow;
+        return isAllOne;
     }
 }
