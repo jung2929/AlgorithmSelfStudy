@@ -1,6 +1,5 @@
 package com.jerryjung;
 
-import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Main {
@@ -41,61 +40,64 @@ public class Main {
             "m", "n", "o", "p", "q", "r",
             "s", "t", "u", "v", "w", "x",
             "y", "z"};
-    private final static ArrayList<Integer> selectedArrayList = new ArrayList<>();
-    private static int loopCount = 0;
+//    private final static ArrayList<Integer> selectedArrayList = new ArrayList<>();
 
     public static void main(String[] args) {
         final Scanner scanner = new Scanner(System.in);
         final int n = scanner.nextInt();
         final int r = scanner.nextInt();
-        final ArrayList<Integer> arrayList = new ArrayList<>();
+        final int[] check = new int[n];
+        final int[] array = new int[r];
 
-        for (int i = 0; i < n; i++) {
-            arrayList.add(i);
-        }
-        permutation(arrayList, 0, n, r);
+        permutation(check, array, n, r, 0);
+//        permutation(check, n, r);
     }
 
-    private static void permutation(final ArrayList<Integer> removedArrayList, int index, final int n, final int r) {
+    private static void permutation(final int[] check, final int[] array, final int n, final int r, final int depth) {
+//    private static void permutation(final int[] check, final int n, final int r) {
         for (int i = 0; i < n; i++) {
-            if (loopCount == 0) {
-                index = i;
+            // 채워야할 자릿수만큼 채웠을때
+            if (depth == r) {
+                for (int value : array) {
+                    System.out.print(alphabet[value]);
+                }
+                System.out.print("\n");
+                return;
+            } else {
+                // check 의 i 번째가 사용중인지 확인
+                if (check[i] == 0) {
+                    check[i] = 1;
+                    array[depth] = i;
+                    permutation(check, array, n, r, depth + 1);
+                    // 사용했던 알파벳 초기화
+                    check[i] = 0;
+                    array[depth] = 0;
+                }
             }
-
-            if (loopCount == r - 1) {
-                for (int k = selectedArrayList.size() - 1; k >= 0; k--) {
-                    removedArrayList.remove(selectedArrayList.get(k));
-                }
-
-                for (final int value : removedArrayList) {
-                    for (final int selectedValue : selectedArrayList) {
-                        System.out.print(alphabet[selectedValue]);
-                    }
-                    System.out.println(alphabet[value]);
-                }
-                // 초기화
-                loopCount = 0;
-                //index = ++i;
-                selectedArrayList.clear();
-                removedArrayList.clear();
-                for (int j = 0; j < n; j++) {
-                    removedArrayList.add(j);
-                }
-                continue;
-                //break;
-            }
-            // 선택된 값 제거, 선택된 어레이리스트에 추가
-            selectedArrayList.add(removedArrayList.get(index++));
-            loopCount++;
-            permutation(removedArrayList, index, n, r);
-            /*// 초기화
-            loopCount = 0;
-            index = ++i;
-            selectedArrayList.clear();
-            removedArrayList.clear();
-            for (int j = 0; j < n; j++) {
-                removedArrayList.add(j);
-            }*/
         }
+//        /*for (int i = 0; i < n; i++) {
+//            // 채워야할 자릿수만큼 채웠을때
+//            if (selectedArrayList.size() == r) {
+//                for (int value : selectedArrayList) {
+//                    System.out.print(alphabet[value]);
+//                }
+//                System.out.print("\n");
+//                return;
+//            } else {
+//                // check 의 i 번째가 사용중인지 확인
+//                if (check[i] == 0) {
+//                    check[i] = 1;
+//                    selectedArrayList.add(i);
+//                    permutation(check, n, r);
+//                    // 사용했던 알파벳 초기화
+//                    check[i] = 0;
+//                    for (int j = 0; j < selectedArrayList.size(); j++) {
+//                        if (selectedArrayList.get(j) == i) {
+//                            selectedArrayList.remove(j);
+//                        }
+//                    }
+//                }
+//            }
+//        }*/
     }
 }
