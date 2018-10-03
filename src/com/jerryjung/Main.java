@@ -45,6 +45,7 @@ public class Main {
      *
      * 예제 출력 2 :
      *
+     * 출처 : 한국정보올림피아드 KOI 2007 지역본선 중등부 1번  
      */
     public static void main(String[] args) {
         final Scanner scanner = new Scanner(System.in);
