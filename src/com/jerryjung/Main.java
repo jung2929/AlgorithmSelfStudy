@@ -1,7 +1,5 @@
 package com.jerryjung;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Scanner;
 
 public class Main {
@@ -61,224 +59,84 @@ public class Main {
      * 예제 출력 2 :
      *
      */
-    final static ArrayList<Integer> possible = new ArrayList<>();
-    final static ArrayList<Integer> numbers = new ArrayList<>();
-    final static HashMap<Integer, Integer> strikeMap = new HashMap<>();
-
     public static void main(String[] args) {
         final Scanner scanner = new Scanner(System.in);
+
         final int loopCount = scanner.nextInt();
-
+        final int[] targetValues = new int[loopCount];
+        final int[] targetStrikes = new int[loopCount];
+        final int[] targetBalls = new int[loopCount];
         for (int i = 0; i < loopCount; i++) {
-            int value = scanner.nextInt();
+            targetValues[i] = scanner.nextInt();
+            targetStrikes[i] = scanner.nextInt();
+            targetBalls[i] = scanner.nextInt();
+        }
 
-            String stringValue = String.valueOf(value);
-            int first = Integer.valueOf(stringValue.substring(0, 1));
-            int second = Integer.valueOf(stringValue.substring(1, 2));
-            int third = Integer.valueOf(stringValue.substring(2, 3));
+        int result = 0;
+        int compareValue = 123;
+        while (compareValue <= 987) {
+            int matchCount = 0;
+            for (int i = 0; i < loopCount; i++) {
+                final int value = targetValues[i];
+                final int strike = targetStrikes[i];
+                final int ball = targetBalls[i];
 
-            int strikeCount = scanner.nextInt();
-            int ballCount = scanner.nextInt();
+                final String stringValue = String.valueOf(value);
+                final int first = Integer.valueOf(stringValue.substring(0, 1));
+                final int second = Integer.valueOf(stringValue.substring(1, 2));
+                final int third = Integer.valueOf(stringValue.substring(2, 3));
 
-            // 매칭된게 없으면 pass
-            if (strikeCount == 0 && ballCount == 0) {
-                continue;
-            }
-            // 지금까지 나온 수들
-            addValueInNumbers(first);
-            addValueInNumbers(second);
-            addValueInNumbers(third);
+                final String compareStringValue = String.valueOf(compareValue);
+                final int compareFirst = Integer.valueOf(compareStringValue.substring(0, 1));
+                final int compareSecond = Integer.valueOf(compareStringValue.substring(1, 2));
+                final int compareThird = Integer.valueOf(compareStringValue.substring(2, 3));
+                int compareStrike = 0;
+                int compareBall = 0;
 
-            // 스트라이크와 볼이 0이 아닐때 / 아직 가능성있는 수가 하나도 안나왔으면 일단 3개 다 삽입
-            if (possible.size() == 0) {
-                possible.add(first);
-                possible.add(second);
-                possible.add(third);
-                continue;
-            }
-
-            switch (strikeCount) {
-                case 0:
-                    if (ballCount == 3) {
-                        possible.clear();
-                        possible.add(first);
-                        possible.add(second);
-                        possible.add(third);
-                    } else {
-                        switch (strikeMap.size()) {
-                            case 0:
-                                addValueInPossible(first);
-                                addValueInPossible(second);
-                                addValueInPossible(third);
-                                break;
-                            case 1:
-                                if (strikeMap.get(0) != null) {
-                                    addValueInPossible(second);
-                                    addValueInPossible(third);
-                                } else if (strikeMap.get(1) != null) {
-                                    addValueInPossible(first);
-                                    addValueInPossible(third);
-                                } else if (strikeMap.get(2) != null) {
-                                    addValueInPossible(first);
-                                    addValueInPossible(second);
-                                }
-                                break;
-                            case 2:
-                                if (strikeMap.get(0) != null && strikeMap.get(1) != null) {
-                                    addValueInPossible(first);
-                                    addValueInPossible(second);
-                                } else if (strikeMap.get(0) != null && strikeMap.get(2) == null) {
-                                    addValueInPossible(first);
-                                    addValueInPossible(third);
-                                } else if (strikeMap.get(1) != null && strikeMap.get(2) == null) {
-                                    addValueInPossible(second);
-                                    addValueInPossible(third);
-                                }
-                                break;
-                        }
-                    }
+                if (compareFirst == compareSecond || compareSecond == compareThird || compareFirst == compareThird) {
                     break;
-                case 1:
-                    for (Integer number : possible) {
-                        if (first == number) {
-                            strikeMap.putIfAbsent(0, first);
-                            break;
-                        } else if (second == number) {
-                            strikeMap.putIfAbsent(1, second);
-                            break;
-                        } else if (third == number) {
-                            strikeMap.putIfAbsent(2, third);
-                            break;
-                        }
-                    }
-                    if (ballCount == 1 || ballCount == 2) {
-                        addValueInPossible(first);
-                        addValueInPossible(second);
-                        addValueInPossible(third);
-                    }
+                }
+
+                if (compareFirst == 0 || compareSecond == 0 || compareThird == 0) {
                     break;
-                case 2:
-                    final int possibleSize = possible.size();
-                    for (int j = 0; j < possibleSize; j++) {
-                        int number = possible.get(j);
-                        if (first == number) {
-                            strikeMap.putIfAbsent(0, first);
-                            addValueInPossible(second);
-                            addValueInPossible(third);
-                        }
-                        if (second == number) {
-                            strikeMap.putIfAbsent(1, second);
-                            addValueInPossible(first);
-                            addValueInPossible(third);
-                        }
-                        if (third == number) {
-                            strikeMap.putIfAbsent(2, third);
-                            addValueInPossible(first);
-                            addValueInPossible(second);
-                        }
-                    }
-                    switch (ballCount) {
-                        case 0:
-                            possible.clear();
-                            for (int k = 0; k < 3; k++) {
-                                if (strikeMap.get(k) == null) {
-                                    switch (k) {
-                                        case 0:
-                                            removeValueInPossible(first);
-                                            break;
-                                        case 1:
-                                            removeValueInPossible(second);
-                                            break;
-                                        case 2:
-                                            removeValueInPossible(third);
-                                            break;
-                                    }
-                                }
-                            }
-                            break;
-                        case 1:
-                            break;
-                    }
+                }
+
+                if (first == compareFirst) {
+                    compareStrike++;
+                }
+
+                if (second == compareSecond) {
+                    compareStrike++;
+                }
+
+                if (third == compareThird) {
+                    compareStrike++;
+                }
+
+                if (first == compareSecond || first == compareThird) {
+                    compareBall++;
+                }
+
+                if (second == compareFirst || second == compareThird) {
+                    compareBall++;
+                }
+
+                if (third == compareFirst || third == compareSecond) {
+                    compareBall++;
+                }
+
+                if (strike == compareStrike && ball == compareBall) {
+                    matchCount++;
+                } else {
                     break;
-                case 3:
-                    // 스트라이크 3개면 가능성 1개
-                    System.out.print(1);
-                    return;
+                }
             }
+            if (matchCount == loopCount) {
+                result++;
+            }
+            compareValue++;
         }
 
-        for (int h = 0; h < strikeMap.size(); h++) {
-            if (strikeMap.get(h) != null) {
-                removeValueInPossible(strikeMap.get(h));
-            }
-        }
-
-        System.out.print("End");
+        System.out.print(result);
     }
-
-    private static void addValueInPossible(int value) {
-        boolean isExists = false;
-        for (Integer v : possible) {
-            if (value == v) {
-                isExists = true;
-                break;
-            }
-        }
-        if (!isExists) {
-            possible.add(value);
-        }
-    }
-
-    private static void removeValueInPossible(int value) {
-        for (int i = 0; i < possible.size(); i++) {
-            if (value == possible.get(i)) {
-                possible.remove(i);
-                break;
-            }
-        }
-    }
-
-    private static void addValueInNumbers(int value) {
-        boolean isExists = false;
-        for (Integer v : numbers) {
-            if (value == v) {
-                isExists = true;
-                break;
-            }
-        }
-        if (!isExists) {
-            numbers.add(value);
-        }
-    }
-
-    /*private static void removeValueInNumbers(int value) {
-        for (int i = 0; i < numbers.size(); i++) {
-            if (value == numbers.get(i)) {
-                numbers.remove(i);
-                break;
-            }
-        }
-    }*/
-
-    /*private static int addValueInStrikeMap(int index, int value) {
-        for (Integer number : possible) {
-            if (value == number) {
-                strikeMap.putIfAbsent(index, value);
-            }
-        }
-        return index;
-    }*/
-
-    /*private static void addValueInImpossible(int value) {
-        boolean isExists = false;
-        for (Integer v : impossible) {
-            if (value == v) {
-                isExists = true;
-                break;
-            }
-        }
-        if (!isExists) {
-            impossible.add(value);
-        }
-    }*/
 }
