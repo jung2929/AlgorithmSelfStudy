@@ -1,5 +1,7 @@
 package com.jerryjung;
 
+import java.util.Scanner;
+
 public class Main {
 
     /**
@@ -38,6 +40,61 @@ public class Main {
      * 출처 : 한국정보올림피아드 KOI 2006 본선 초등부1번
      */
     public static void main(String[] args) {
-        System.out.println("정제리 알고리즘 셀프 스터디");
+        final Scanner scanner = new Scanner(System.in);
+        final int N = scanner.nextInt();
+        final int[][] array = new int[N][5];
+        final int[][] check = new int[N][N];
+        for (int i = 0; i < N; i++) {
+            for (int j = 0; j < 5; j++) {
+                array[i][j] = scanner.nextInt();
+            }
+        }
+        final int[] count = new int[N];
+        for (int column = 0; column < 5; column++) {
+            for (int row = 0; row < N; row++) {
+                final int value = array[row][column];
+                for (int other = 0; other < N; other++) {
+                    if (row == other) continue;
+                    final int compareValue = array[other][column];
+                    if (value == compareValue && check[row][other] == 0) {
+//                    if (value == compareValue) {
+                        count[row]++;
+                        check[row][other] = 1;
+                        break;
+                    }
+                }
+            }
+        }
+
+        /*for (int i = 0; i < N; i++) {
+            int cnt = 0;
+            for (int j = 0; j < N; j++) {
+                if (check[i][j] == 1) {
+                    cnt++;
+                }
+            }
+            System.out.println(cnt);
+        }*/
+
+//        System.out.println("--------------------------------------");
+
+        int maxCount = 0;
+        int maxCountIndex = 0;
+        for (int i = 0; i < count.length; i++) {
+//            System.out.println(count[i]);
+            if (count[i] > maxCount) {
+                maxCount = count[i];
+                maxCountIndex = i + 1;
+            }
+        }
+
+//        System.out.println("--------------------------------------");
+
+        /*if (maxCountIndex == -1) {
+            System.out.print(0);
+        } else {
+            System.out.print(maxCountIndex);
+        }*/
+        System.out.print(maxCountIndex);
     }
 }
