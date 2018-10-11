@@ -60,7 +60,10 @@ public class Main {
 //                    if (value == compareValue) {
                         count[row]++;
                         check[row][other] = 1;
-                        break;
+                        /**
+                         * check 배열을 만들어놓고, break를 해서 전부 다 체크를 못하는 경우 조심!!
+                         */
+//                        break;
                     }
                 }
             }
@@ -71,30 +74,33 @@ public class Main {
             for (int j = 0; j < N; j++) {
                 if (check[i][j] == 1) {
                     cnt++;
+                    System.out.println((i + 1) + "번째 학생과 겹치는 학생 : " + (j + 1));
                 }
             }
-            System.out.println(cnt);
-        }*/
+            System.out.println((i + 1) + "번째 학생의 겹치는 학생 수 : " + cnt);
+        }
 
-//        System.out.println("--------------------------------------");
+        System.out.println("--------------------------------------");*/
 
         int maxCount = 0;
-        int maxCountIndex = 0;
+        int maxCountIndexValue = 0;
+//        int maxCountIndexValue = -1;
         for (int i = 0; i < count.length; i++) {
 //            System.out.println(count[i]);
             if (count[i] > maxCount) {
                 maxCount = count[i];
-                maxCountIndex = i + 1;
+//                maxCountIndexValue = i + 1;
+                maxCountIndexValue = i;
             }
         }
 
 //        System.out.println("--------------------------------------");
 
-        /*if (maxCountIndex == -1) {
+        /*if (maxCountIndexValue == -1) {
             System.out.print(0);
         } else {
-            System.out.print(maxCountIndex);
+            System.out.print(maxCountIndexValue);
         }*/
-        System.out.print(maxCountIndex);
+        System.out.print(maxCountIndexValue + 1);
     }
 }
