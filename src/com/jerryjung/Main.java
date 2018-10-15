@@ -39,11 +39,18 @@ public class Main {
      *
      * 출처 : 
      */
+
+//    private static int loop = 0;
+
     public static void main(String[] args) {
         final Scanner scanner = new Scanner(System.in);
         //division(scanner.nextInt(), 0, false);
         //division(scanner.nextInt(), 0, false);
-        division(scanner.nextInt(), 1);
+//        loop = scanner.nextInt();
+//        division(loop - 1, 1, "");
+//        int start = scanner.nextInt();
+//        String result = start - 1 + "+" + 1;
+        division(scanner.nextInt()- 1, 1, "", "");
     }
     // 3 = 2 + 1
     //     1 + 1 + 1
@@ -59,25 +66,28 @@ public class Main {
     //     2 + 2 + 1
     //     2 + 1 + 1 + 1
     //     1 + 1 + 1 + 1 + 1
-    private static void division(int value, int loop) {
-//    private static void division(int value, int loop, boolean isLast) {
-//    private static void division(int value, boolean isLast) {
-        for (int i = value; i > 0; i--) {
-            if (loop > 1) {
-                System.out.print(i);
-                System.out.print("+");
-                System.out.println(loop);
-                System.out.print(i);
-                System.out.print("+");
-                division(loop, loop - 1);
+    private static void division(int prev, int next, String start, String end) {
+        if (prev > 1) {
+            if (next == 1) {
+                System.out.println(start + prev + "+" + next  + end);
+                start = prev - 1 + "+";
+                division(prev - 1, next + 1, start, end);
+            } else if (next == 2) {
+                System.out.println(start + next);
+                end = "+1";
+                //end = "";
+                System.out.println(start + "1+1");
+                start = prev - 1 + "+";
+                division(prev - 1, next - 1, start, end);
             }
-
-            if (loop == 1) {
-                System.out.print(i - loop);
-                System.out.print("+");
-                System.out.println(loop);
-                loop = loop + 1;
-            }
+//            else {
+//                System.out.println(result + next);
+//                division(prev, next, result);
+//                result = "";
+//            }
+        } else {
+            System.out.print(start + 1 + "+" + 1 + end);
+        }
 
 //            if (i == 1) {
 //                System.out.println(1);
@@ -103,6 +113,6 @@ public class Main {
 //                System.out.print();
 //                System.out.print();
 //            }
-        }
+//        }
     }
 }
