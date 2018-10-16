@@ -39,12 +39,10 @@ public class Main {
      */
     // 중복 되지않는 값
     private final static ArrayList<Integer> decimalArrayList = new ArrayList<>();
-//	final static ArrayList<String> stringArrayList = new ArrayList<>();
 
     public static void main(String[] args) {
         final Scanner scanner = new Scanner(System.in);
         final int T = scanner.nextInt(); // 테스트 케이스의 개수
-        //System.out.print(Integer.parseInt("1F7", 16));
         // 테스트 케이스 모두 돌기
         for (int t = 1; t <= T; t++) {
             // 테스트 케이스에 필요한 값 선언
@@ -53,14 +51,6 @@ public class Main {
             final int K = scanner.nextInt(); // K= 찾을 순서
             final String value = scanner.next(); // 테스트 케이스 값
             final int valueLength = value.length(); // 문자열 길이
-            final String[] allValue = new String[textLength];
-//        	final String[] firstS = new String[4];
-//        	final String[] secondS = new String[4];
-//        	final String[] thirdS = new String[4];
-//            String first = "";
-//            String second = "";
-//            String third = "";
-//            String fourth = "";
             // 0회전, 1회전, 2회전 .. 모든 값 넣기
             for (int n = 0; n < 4; n++) {
                 for (int m = 0; m < textLength; m++) {
@@ -75,64 +65,10 @@ public class Main {
                         decimalArrayList.add(Integer.parseInt(substringValue, 16));
                     }
                 }
-        		/*
-//        		firstS[n] = value.substring(n * textLength, (n + 1) * textLength);
-        		first = value.substring(n * textLength, (n + 1) * textLength);
-
-        		if (n == 0) {
-//        			secondS[n] = value.substring(valueLength - 1, valueLength);
-//        			secondS[n] += (value.substring(0, textLength - 1));
-
-        			second = value.substring(valueLength - 1, valueLength);
-        			second += (value.substring(0, textLength - 1));
-
-//        			thirdS[n] = value.substring(valueLength - 2, valueLength);
-//        			thirdS[n] += (value.substring(0, textLength - 2));
-        			third = value.substring(valueLength - 2, valueLength);
-        			third += (value.substring(0, textLength - 2));
-
-        			fourth = value.substring(valueLength - 3, valueLength);
-        			fourth += (value.substring(0, textLength - 3));
-        		} else if (n == 3) {
-//        			secondS[n] = value.substring((n * textLength) - 1, ((n + 1) * textLength) - 1);
-        			second = value.substring((n * textLength) - 1, ((n + 1) * textLength) - 1);
-
-//            		thirdS[n] = value.substring((n * textLength) - 2, ((n + 1) * textLength) - 2);
-        			third = value.substring((n * textLength) - 2, ((n + 1) * textLength) - 2);
-
-        			fourth = value.substring((n * textLength) - 3, ((n + 1) * textLength) - 3);
-        		} else {
-//        			secondS[n] = value.substring((n * textLength) - 1, ((n + 1) * textLength - 1));
-//            		thirdS[n] = value.substring((n * textLength) - 2, ((n + 1) * textLength) - 2);
-        			second = value.substring((n * textLength) - 1, ((n + 1) * textLength - 1));
-            		third = value.substring((n * textLength) - 2, ((n + 1) * textLength) - 2);
-            		fourth = value.substring((n * textLength) - 3, ((n + 1) * textLength) - 3);
-        		}
-        		if (!isDuplicated(first)) {
-        			decimalArrayList.add(Integer.parseInt(first, 16));
-//        			stringArrayList.add(first);
-        		}
-        		if (!isDuplicated(second)) {
-        			decimalArrayList.add(Integer.parseInt(second, 16));
-//        			stringArrayList.add(second);
-        		}
-        		if (!isDuplicated(third)) {
-        			decimalArrayList.add(Integer.parseInt(third, 16));
-//        			stringArrayList.add(third);
-        		}
-        		if (!isDuplicated(fourth)) {
-        			decimalArrayList.add(Integer.parseInt(fourth, 16));
-//        			stringArrayList.add(third);
-        		}
-        		*/
             }
+            // 정렬
             decimalArrayList.sort(Comparator.reverseOrder());
-//        	stringArrayList.sort(Comparator.reverseOrder());
-//        	if (decimalArrayList.size() < K) {
-//        		System.out.println(decimalArrayList.get(K - decimalArrayList.size() - 1));
-//        	} else {
-//        		System.out.println(decimalArrayList.get(K - 1));
-//        	}
+            // 출력
             System.out.println("#" + t + " " + decimalArrayList.get(K - 1));
             // 초기화
             decimalArrayList.clear();
@@ -147,13 +83,4 @@ public class Main {
         }
         return false;
     }
-
-//    private static boolean isDuplicated2(final String value) {
-//    	for (String v : stringArrayList) {
-//    		if (value.equals(v)) {
-//    			return true;
-//    		}
-//    	}
-//    	return false;
-//    }
 }
